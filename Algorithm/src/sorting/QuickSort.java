@@ -14,7 +14,7 @@ public class QuickSort
 	{
 		for(int i = 0; i < 1; i++)
 		{
-			int[] arr = DataUtil.getData(10000000);
+			int[] arr = DataUtil.getData(100000000);
 			//LogUtil.log(arr);
 			long start = System.currentTimeMillis();
 			//quickSortRight(arr, 0, arr.length - 1);

@@ -7,28 +7,45 @@ public class HeapSort
 {
 	public static void main(String[] args)
 	{
-		int[] arr = DataUtil.getData(10);
-		LogUtil.log(arr);
+		int[] arr = DataUtil.getData(100000000);
+		//LogUtil.log(arr);
 		long start = System.currentTimeMillis();
-		for(int i = arr.length / 2 -1; i >= 0; i--)
-		{
-			buildMaxHeap(arr, i);	
-		}
+		heapSort(arr);
 		long end = System.currentTimeMillis();
-		LogUtil.log(arr);
+		//LogUtil.log(arr);
 		System.out.println("cost: " + (end - start));
 	}
-
-	private static void buildMaxHeap(int[] arr, int i)
+	private static int heapSize;
+	private static void heapSort(int[] arr)
+	{
+		heapSize = arr.length;
+		buildMaxHeap(arr);
+		while(heapSize >= 1)
+		{
+			int tmp = arr[heapSize - 1];
+			arr[heapSize - 1] = arr[0];
+			arr[0] = tmp;
+			heapSize--;
+			maxHeap(arr, 0);
+		}
+	}
+	private static void buildMaxHeap(int[] arr)
+	{
+		for(int i = heapSize / 2 -1; i >= 0; i--)
+		{
+			maxHeap(arr, i);	
+		}
+	}
+	private static void maxHeap(int[] arr, int i)
 	{
 		int l = leftChildIndex(i);
 		int r = rightChildIndex(i);
 		int largest = i;
-		if(l < arr.length && arr[l] > arr[largest])
+		if(l < heapSize && arr[l] > arr[largest])
 		{
 			largest = l;
 		}
-		if(r < arr.length && arr[r] > arr[largest])
+		if(r < heapSize && arr[r] > arr[largest])
 		{
 			largest = r;
 		}
@@ -37,7 +54,7 @@ public class HeapSort
 			int tmp = arr[i];
 			arr[i] = arr[largest];
 			arr[largest] = tmp;
-			buildMaxHeap(arr, largest);
+			maxHeap(arr, largest);
 		}
 	}
 	private static int parentIndex(int i)
